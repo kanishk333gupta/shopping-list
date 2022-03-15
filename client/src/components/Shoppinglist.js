@@ -1,18 +1,16 @@
-import React, { Component } from "react";
-import { Container, ListGroup, ListGroupItem, Button } from "reactstrap";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { v1 as uuid } from "uuid";
-import { connect } from "react-redux";
-import { getItems, deleteItem } from "../actions/itemActions";
-import PropTypes from "prop-types";
-import { DELETE_ITEM } from "../actions/types";
+import React, { Component } from 'react';
+import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { connect } from 'react-redux';
+import { getItems, deleteItem } from '../actions/itemActions';
+import PropTypes from 'prop-types';
 
-class Shoppinglist extends Component {
+class ShoppingList extends Component {
   componentDidMount() {
     this.props.getItems();
   }
 
-  onDeleteClick = (id) => {
+  onDeleteClick = id => {
     this.props.deleteItem(id);
   };
 
@@ -23,7 +21,7 @@ class Shoppinglist extends Component {
         <ListGroup>
           <TransitionGroup className="shopping-list">
             {items.map(({ _id, name }) => (
-              <CSSTransition key={_id} timeout={250} classNames="fade">
+              <CSSTransition key={_id} timeout={500} classNames="fade">
                 <ListGroupItem>
                   <Button
                     className="remove-btn"
@@ -44,12 +42,16 @@ class Shoppinglist extends Component {
   }
 }
 
-Shoppinglist.propTypes = {
+ShoppingList.propTypes = {
   getItems: PropTypes.func.isRequired,
-  item: PropTypes.object.isRequired,
+  item: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  item: state.item,
+const mapStateToProps = state => ({
+  item: state.item
 });
-export default connect(mapStateToProps, { getItems, deleteItem })(Shoppinglist);
+
+export default connect(
+  mapStateToProps,
+  { getItems, deleteItem }
+)(ShoppingList);
