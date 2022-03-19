@@ -6,19 +6,17 @@ const path = require('path');
 const items = require('./routes/api/items');
 
 const app = express();
-
 // Bodyparser Middleware
 app.use(bodyParser.json());
-
 // DB Config
-const db = require('./config/keys').mongoURI;
-
+const db =
+// `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@${process.env.MONGODB_URI}/${process.env.MONGODB_DEFAULT_DB}?retryWrites=true&w=majority` 
+require('./config/keys').mongoURI;
 // Connect to Mongo
 mongoose
-  .connect(db)
+  .connect(db, { useNewUrlParser: true ,useUnifiedTopology: true })
   .then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));
-
 // Use Routes
 app.use('/api/items', items);
 
